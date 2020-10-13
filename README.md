@@ -22,8 +22,9 @@ Requirements: you need openssh installed to execute the steps bellow.
 
 1. Creates a folder in the user home directory with the any name. By default this directory is called `.m2mams`, but it can have any name that can be parameterized during
 the lib execution.
-1. Inside that folder executes the command `ssh-keygen -f <key-pair> -m RFC4716 -t rsa-sha2-512 -b 4096 -C "your_email@example.com"`, where the email is actually your identity that needs to be recognizable by the server and the `<key-pair>` represents the name of the key pair that is going to be generated.
-1. Copy the content of the file `<key-pair>.pub` and register it on the server, using the desired storage mechanism. This is your public key.
+1. Inside that folder executes the command `ssh-keygen -f <key-pair> -m PEM -t rsa-sha2-512 -b 4096 -C "your_email@example.com"`, where the email is actually your identity that needs to be recognizable by the server and the `<key-pair>` represents the name of the key pair that is going to be generated.
+1. Still inside the same folder executes the command `openssl rsa -in <key-pair> -pubout -out <key-pair>.pub.pem`, generating the file that is going to be shared with the server.
+1. Copy the content of the file `<key-pair>.pub.pem` and share it with the server.
 
 ### Using m2mams CLI
 
