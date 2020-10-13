@@ -28,3 +28,34 @@ the lib execution.
 ### Using m2mams CLI
 
 To be defined.
+
+## Architecture
+
+The solution is based on 4 key components that interact to provide the capabilities of generating a signature and verifying this signature. The process of sending messages
+from client to server is not part of the scope o this project, since any HTTP Client lib that supports HTTPS can be used to achieve this.
+
+### Private Key Provider [CLIENT]
+
+The private key provider is responsible to load and parde the correct private key that should be used by the Signer to generate the signature that should be sent to the server.
+The are basically to implementations of private key providers:
+
+* Local File System
+* Environment Variable
+
+The client libs should always provide both implementations.
+
+### Signer [CLIENT]
+
+The signer receives a private key provider and a message, generating a signature as output. This signature is a JWT token that contains some important claims:
+
+* `uid`: The user identity, provided by the `-C "your_email@example.com"` part of the key generation.
+* `kp`: The `<key-pair>` name used for signing the message.
+
+### Public Key Provider [SERVER]
+
+The public key provider is used to retrieve the public key that is required to verify a given signature. To identify exactly which public key to be used the lib uses both
+the key pair name and the user id that comes in the JWT token as the claims `kp` and `uid`.
+
+### Verifier [SERVER]
+
+Finally, the verifier, that receives the public key provider and the signature to be verified.
