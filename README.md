@@ -54,16 +54,6 @@ In this case you should copy the content of the file `~/.m2mams/my-user-id@compa
 The solution is based on 2 key components that interact to provide the capabilities of generating a signature and verifying this signature. The process of sending messages
 from client to server is not part of the scope of this project, since any HTTP Client lib that supports HTTPS can be used to achieve this.
 
-### Private Key Provider [CLIENT]
-
-The private key provider is responsible to load and parde the correct private key that should be used by the Signer to generate the signature that should be sent to the server.
-The are basically to implementations of private key providers:
-
-* Local File System
-* Environment Variable
-
-The client libs should always provide both implementations.
-
 ### Signer [CLIENT]
 
 The signer uses a private key to sign the message, generating a [JWT](https://jwt.io/) token as output. This JWT token contains some important claims:
@@ -73,6 +63,10 @@ The signer uses a private key to sign the message, generating a [JWT](https://jw
 
 With this claims, the verifier can identify exactly which public key to use to verify the signature.
 
+This component can be used as a command on the [CLI](https://github.com/flsusp/m2mams-cli) or as lib, as provided by [m2mams-signer-go](https://github.com/flsusp/m2mams-signer-go).
+
 ### Verifier [SERVER]
 
 Finally, the verifier, that has access to all the registered public keys and is able to identify which one should be used and use it to verify a given JWT token.
+
+This component can be used as a command on the [CLI](https://github.com/flsusp/m2mams-cli) or as lib, as provided by [m2mams-verifier-go](https://github.com/flsusp/m2mams-verifier-go).
