@@ -34,6 +34,21 @@ created folder. Each user can have multiple keys (so we can provide user orchest
 
 You can find the CLI documentation [here](https://github.com/flsusp/m2mams-cli).
 
+Using the CLI to generate a key pair is simple like executing the given command:
+
+```shell
+m2mams generate my-user-id@company.com
+```
+
+This is going to generate the keys bellow:
+
+```
+~/.m2mams/my-user-id@company.com/is_rsa
+~/.m2mams/my-user-id@company.com/is_rsa.pub.pem
+```
+
+In this case you should copy the content of the file `~/.m2mams/my-user-id@company.com/is_rsa.pub.pem` and share it with the server.
+
 ## Architecture
 
 The solution is based on 2 key components that interact to provide the capabilities of generating a signature and verifying this signature. The process of sending messages
